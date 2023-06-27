@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const bodyParser = require('body-parser');
 const jsonParser = bodyParser.json(); 
-const db = require('/../config/db');
+const db = require('../config/db');
 const axios = require('axios');
 const cheerio = require('cheerio');
 const Link = "";
@@ -74,7 +74,7 @@ router.get('/', jsonParser, async (req, res) => {
     }
 });
 
-router.delete('/', auth, jsonParser, async (req, res) => {
+router.delete('/', jsonParser, async (req, res) => {
     try {
         const link = await db.promise().query('SELECT * FROM a_refresh WHERE link = ?', [Link]);
         const delay = await db.promise().query('SELECT * FROM a_refresh WHERE delay = ?', [Delay]);
@@ -92,3 +92,7 @@ router.delete('/', auth, jsonParser, async (req, res) => {
         res.status(500).json('Internal server error');
     }
 });
+
+module.exports = (app) => {
+    app.use(router);
+}
