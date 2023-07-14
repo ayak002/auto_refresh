@@ -11,8 +11,6 @@ import Slider from "@mui/material/Slider";
 export const Autorefresh = (props) => {
   const [link, setLink] = useState('');
   const [delay, setDelay] = useState(15);
-
-
   
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -36,11 +34,16 @@ export const Autorefresh = (props) => {
     }
   }
 
+  const handleGoLink = async (event) => {
+    event.preventDefault();
+    window.location.href = link;
+  }
+
   return (
-    <div className="App">
+    <div className="App"> 
       <Container>
         <Box>
-          <Box sx={{ mt: 9, mb: 2 }} component="form" onSubmit={handleSubmit}>
+          <Box sx={{ mt: 9, mb: 2 }} component="form" onSubmit={handleGoLink}>
             <Typography sx={{ mb: 2 }} color="primary" component="h1" variant="h3">
               AutoRefresh
             </Typography>
