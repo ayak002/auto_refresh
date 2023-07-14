@@ -10,7 +10,7 @@ const Delay = "";
 const CurrentCode = "";
 const PreviousCode = "";
 
-const handle_link = (link, next) => {
+const handle_link = (link, next) => {  //fonction qui vérifie si le lien n'est pas vide/faux
     if (link[0].length == 0) {
         console.log("no link inside");
         return res.status(404).json('Empty link');
@@ -28,7 +28,7 @@ const handle_delay = (delay, next) => {
     }
 }
 
-router.post("/", jsonParser, async (req, res) => {
+router.post("/", jsonParser, async (req, res) => { // fonction qui stocke les infos (link/delay) dans la db
     const link = req.body.link;
     const delay = req.body.delay;
     console.log(`console dans server : ${link, delay}`);
@@ -48,9 +48,9 @@ router.post("/", jsonParser, async (req, res) => {
     }
 });
 
-router.get('/', jsonParser, async (req, res) => {
+router.get('/', jsonParser, async (req, res) => { //fonction qui va chercher les infos
     try {
-        const link = await db.promise().query('SELECT * FROM a_refresh WHERE link = ?', [Link]);
+        const link = await db.promise().query('SELECT * FROM a_refresh WHERE link = ?', [Link]); //recuperer/stocker les infos db.sql pour les utiliser
         const delay = await db.promise().query('SELECT * FROM a_refresh WHERE delay = ?', [Delay]);
 
         if (link[0].length == 0 || delay[0].length == 0) {
@@ -76,7 +76,7 @@ router.get('/', jsonParser, async (req, res) => {
 
 router.delete('/', jsonParser, async (req, res) => {
     try {
-        const link = await db.promise().query('SELECT * FROM a_refresh WHERE link = ?', [Link]);
+        const link = await db.promise().query('SELECT * FROM a_refresh WHERE link = ?', [Link]); //récuperer/stocker les infos pour les supprimer
         const delay = await db.promise().query('SELECT * FROM a_refresh WHERE delay = ?', [Delay]);
         
         if (link[0].length == 0 || delay[0].length == 0) {
