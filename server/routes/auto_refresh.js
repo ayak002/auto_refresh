@@ -29,19 +29,20 @@ const handle_delay = (delay, next) => {
 }
 
 router.post("/", jsonParser, async (req, res) => { // fonction qui stocke les infos (link/delay) dans la db
+    console.log(body);
     const link = req.body.link;
     const delay = req.body.delay;
-    console.log(`console dans server : ${link, delay}`);
+    console.log(`console dans server : lien = ${link} et deley = ${delay}`);
     try {
-        handle_link(link);
-        handle_delay(delay);
+        //handle_link(link);
+        //handle_delay(delay);
         const [data] = await db.promise().query('INSERT INTO a_refresh (link, delay) VALUES (?, ?)', [
             link,
             delay
         ]);
         Link = link;
         Delay = delay;
-        res.status(200).json(`${link} catched succesfully and refresh in ${delay}`);
+        return res.status(200).json(`${link} catched succesfully and refresh in ${delay}`);
     } catch (err) {
         console.error(err);
         res.status(500).json('Internal server error');     
